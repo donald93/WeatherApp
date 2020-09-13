@@ -4,6 +4,6 @@ namespace WeatherApp.Integrations
 {
     interface INationalWeatherService
     {
-        public Task<ForecastModel> GetForecastforZone(string zone);
+        public Task<ForecastModel> GetForecastForZone(string zone);
     }
 }

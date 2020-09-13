@@ -1,5 +1,10 @@
-﻿<h3>WeatherResult</h3>
+﻿<div style="margin: 10px; min-width: 100px;">
+    <h4>@Forecast.name</h4>
+    <div>@Forecast.detailedForecast</div>
+</div>
 
 @code {
 
+    [Parameter]
+    public Period Forecast { get; set; }
 }

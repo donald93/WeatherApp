@@ -16,7 +16,7 @@ namespace WeatherApp.Integrations
             _client = client;
         }
 
-        public async Task<ForecastModel> GetForecastforZone(string zone)
+        public async Task<ForecastModel> GetForecastForZone(string zone)
         {
             var url = $"/zones/public/{zone}/forecast";
 

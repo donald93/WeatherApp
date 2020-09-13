@@ -1,19 +1,37 @@
 ﻿@page "/"
 @page "/search"
 
-<SearchBar></SearchBar>
+<div class="d-flex flex-column align-items-center">
 
-<ul>
-    @foreach (var result in weatherResults)
-    {
-        <WeatherResult></WeatherResult>
-    }
-</ul>
 
-Welcome to your new app.
+    <div>
+        <SearchBar></SearchBar>
+    </div>
+
+
+    <ul>
+        @if (State.SelectedForecast != null)
+        {
+            @foreach (var result in State.SelectedForecast.properties.periods)
+            {
+                <WeatherResult Forecast="@result"></WeatherResult>
+            }
+        }
+
+    </ul>
+</div>
+
+@inject AppState State
+@implements IDisposable
 
 @code {
-    private IEnumerable<int> weatherResults = new List<int>
-{1, 2,3
-    };
+    protected override void OnInitialized()
+    {
+        State.OnChange += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        State.OnChange -= StateHasChanged;
+    }
 }
