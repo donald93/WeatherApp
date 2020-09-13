@@ -1,0 +1,19 @@
+﻿@page "/"
+@page "/search"
+
+<SearchBar></SearchBar>
+
+<ul>
+    @foreach (var result in weatherResults)
+    {
+        <WeatherResult></WeatherResult>
+    }
+</ul>
+
+Welcome to your new app.
+
+@code {
+    private IEnumerable<int> weatherResults = new List<int>
+{1, 2,3
+    };
+}
