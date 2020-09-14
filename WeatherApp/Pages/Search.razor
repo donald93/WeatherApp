@@ -5,14 +5,14 @@
 
 
     <div>
-        <SearchBar></SearchBar>
+        <SearchBar @bind-Forecast="currentForecast"></SearchBar>
     </div>
 
 
     <ul>
-        @if (State.SelectedForecast != null)
+        @if (currentForecast != null)
         {
-            @foreach (var result in State.SelectedForecast.Properties.Periods)
+            @foreach (var result in currentForecast.Properties.Periods)
             {
                 <WeatherResult Forecast="@result"></WeatherResult>
             }
@@ -21,17 +21,6 @@
     </ul>
 </div>
 
-@inject AppState State
-@implements IDisposable
-
 @code {
-    protected override void OnInitialized()
-    {
-        State.Subscribe(StateHasChanged);
-    }
-
-    public void Dispose()
-    {
-        State.Unsubscribe(StateHasChanged);
-    }
+    private ForecastModel currentForecast = null;
 }

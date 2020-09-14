@@ -7,15 +7,19 @@
 </button>
 
 @inject NationalWeatherService Client
-@inject AppState State
 @code {
+    [Parameter]
+    public ForecastModel Forecast { get; set; }
+
+    [Parameter]
+    public EventCallback<ForecastModel> ForecastChanged { get; set; }
 
     private string Location = "orz006";
 
     private async Task Search()
     {
-        var forecasts = await Client.GetForecastForZone(Location);
-        State.SetForecastModel(forecasts);
-    }
+        var result = await Client.GetForecastForZone(Location);
 
+        await ForecastChanged.InvokeAsync(result);
+    }
 }
