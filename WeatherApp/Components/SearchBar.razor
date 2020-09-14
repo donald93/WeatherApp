@@ -12,12 +12,9 @@
 
     private string Location = "orz006";
 
-    private ForecastModel forecasts;
-
-
     private async Task Search()
     {
-        forecasts = await Client.GetForecastForZone(Location);
+        var forecasts = await Client.GetForecastForZone(Location);
         State.SetForecastModel(forecasts);
     }
 

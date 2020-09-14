@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace WeatherApp.Integrations
 {
-    public class NationalWeatherService : INationalWeatherService
+    public class NationalWeatherService
     {
-
         private readonly HttpClient _client;
 
         public NationalWeatherService(HttpClient client)
@@ -26,7 +25,7 @@ namespace WeatherApp.Integrations
 
             using var responseStream = await response.Content.ReadAsStreamAsync();
 
-            var result = await JsonSerializer.DeserializeAsync<ForecastModel>(responseStream);
+            var result = await JsonSerializer.DeserializeAsync<ForecastModel>(responseStream, new JsonSerializerOptions { PropertyNameCaseInsensitive = true});
 
             return result;
         }

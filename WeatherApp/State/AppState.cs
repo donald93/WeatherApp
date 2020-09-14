@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Components;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using WeatherApp.Integrations;
 
 namespace WeatherApp.State
@@ -7,7 +10,7 @@ namespace WeatherApp.State
     {
         public ForecastModel SelectedForecast { get; private set; }
 
-        public event Action OnChange;
+        private IEnumerable<Action> OnChanged = new List<Action>();
 
         public void SetForecastModel(ForecastModel model)
         {
@@ -15,6 +18,22 @@ namespace WeatherApp.State
             NotifyStateChanged();
         }
 
-        private void NotifyStateChanged() => OnChange?.Invoke();
+        public void Subscribe(Action action)
+        {
+            OnChanged = OnChanged.Append(action);
+        }
+
+        public void Unsubscribe(Action action)
+        {
+            OnChanged = OnChanged.Where(c => c != action);
+        }
+
+        private void NotifyStateChanged()
+        {
+            foreach(var changed in OnChanged)
+            {
+                changed.Invoke();
+            }
+        }
     }
 }

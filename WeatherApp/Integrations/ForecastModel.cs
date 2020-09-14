@@ -5,21 +5,21 @@ namespace WeatherApp.Integrations
 {
     public class ForecastModel
     {
-        public Properties properties { get; set; }
+        public Properties Properties { get; set; }
     }
 
     public class Properties
     {
-        public string zone { get; set; }
-        public DateTime updated { get; set; }
-        public IEnumerable<Period> periods { get; set; }
+        public string Zone { get; set; }
+        public DateTime Updated { get; set; }
+        public IEnumerable<Period> Periods { get; set; }
 
     }
 
     public class Period
     {
-        public int number { get; set; }
-        public string name { get; set; }
-        public string detailedForecast { get; set; }
+        public int Number { get; set; }
+        public string Name { get; set; }
+        public string DetailedForecast { get; set; }
     }
 }

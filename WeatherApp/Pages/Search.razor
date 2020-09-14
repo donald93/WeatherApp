@@ -12,7 +12,7 @@
     <ul>
         @if (State.SelectedForecast != null)
         {
-            @foreach (var result in State.SelectedForecast.properties.periods)
+            @foreach (var result in State.SelectedForecast.Properties.Periods)
             {
                 <WeatherResult Forecast="@result"></WeatherResult>
             }
@@ -27,11 +27,11 @@
 @code {
     protected override void OnInitialized()
     {
-        State.OnChange += StateHasChanged;
+        State.Subscribe(StateHasChanged);
     }
 
     public void Dispose()
     {
-        State.OnChange -= StateHasChanged;
+        State.Unsubscribe(StateHasChanged);
     }
 }
