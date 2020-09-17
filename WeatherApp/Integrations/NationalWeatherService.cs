@@ -17,7 +17,30 @@ namespace WeatherApp.Integrations
 
         public async Task<ForecastModel> GetForecastForZone(string zone)
         {
-            var url = $"/zones/public/{zone}/forecast";
+            ForecastModel result;
+            try
+            {
+                var url = $"/zones/public/{zone}/forecast";
+
+                var response = await _client.GetAsync(url);
+
+                response.EnsureSuccessStatusCode();
+
+                using var responseStream = await response.Content.ReadAsStreamAsync();
+
+                result = await JsonSerializer.DeserializeAsync<ForecastModel>(responseStream, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            }
+            catch(HttpRequestException e)
+            {
+                result = new ForecastModel { ErrorMessage = e.Message };
+            }
+
+            return result;
+        }
+
+        public async Task<ZonesModel> GetZones(string area, string type)
+        {
+            var url = $"/zones?area={area}&type={type}";
 
             var response = await _client.GetAsync(url);
 
@@ -25,9 +48,11 @@ namespace WeatherApp.Integrations
 
             using var responseStream = await response.Content.ReadAsStreamAsync();
 
-            var result = await JsonSerializer.DeserializeAsync<ForecastModel>(responseStream, new JsonSerializerOptions { PropertyNameCaseInsensitive = true});
+            var result = await JsonSerializer.DeserializeAsync<ZonesModel>(responseStream, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
             return result;
         }
+
+
     }
 }

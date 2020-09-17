@@ -6,6 +6,7 @@ namespace WeatherApp.Integrations
     public class ForecastModel
     {
         public Properties Properties { get; set; }
+        public string ErrorMessage { get; set; }
     }
 
     public class Properties

@@ -4,19 +4,27 @@
 <div class="d-flex flex-column align-items-center">
 
 
-    <div>
+    @*<div>
         <SearchBar @bind-Forecast="currentForecast"></SearchBar>
+    </div>*@
+
+    <div>
+        <ZoneSelect @bind-Forecast="currentForecast"></ZoneSelect>
     </div>
 
 
     <ul>
-        @if (currentForecast != null)
+        @if (currentForecast != null && currentForecast?.ErrorMessage == null)
         {
             @foreach (var result in currentForecast.Properties.Periods)
             {
                 <WeatherResult Forecast="@result"></WeatherResult>
             }
+        } else if(currentForecast != null && currentForecast?.ErrorMessage != null)
+        {
+            <Error ErrorMessage="@currentForecast.ErrorMessage"></Error>
         }
+
 
     </ul>
 </div>
